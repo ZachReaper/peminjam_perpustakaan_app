@@ -13,12 +13,67 @@ class RegisterView extends GetView<RegisterController> {
         title: const Text('RegisterView'),
         centerTitle: true,
       ),
-      body: const Center(
-        child: Text(
-          'RegisterView is working',
-          style: TextStyle(fontSize: 20),
+      body: Form(
+        key: controller.formKey,
+        child: Column(
+          children: [
+            TextFormField(
+              controller: controller.namaController,
+              decoration: InputDecoration(hintText: "Masukkan Nama"),
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return "Nama tidak boleh kosong";
+                }
+                return null;
+              },
+            ),
+            TextFormField(
+              controller: controller.usernameController,
+              decoration: InputDecoration(hintText: "Masukkan Username"),
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return "Username tidak boleh kosong";
+                }
+                return null;
+              },
+            ),TextFormField(
+              controller: controller.telpController,
+              decoration: InputDecoration(hintText: "Masukkan No telp"),
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return "No telp tidak boleh kosong";
+                }
+                return null;
+              },
+            ),TextFormField(
+              controller: controller.alamatController,
+              decoration: InputDecoration(hintText: "Masukkan Alamat"),
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return "Alamat tidak boleh kosong";
+                }
+                return null;
+              },
+            ),TextFormField(
+              controller: controller.passwordController,
+              decoration: InputDecoration(hintText: "Masukkan Password"),
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return "Password tidak boleh kosong";
+                }
+                return null;
+              },
+            ),
+            Obx(() =>
+            controller.loadingBook.value?
+            CircularProgressIndicator():
+            ElevatedButton(onPressed: () {
+              controller.addRegister();
+            },
+                child: Text("Register")))
+          ],
         ),
-      ),
+      )
     );
   }
 }
