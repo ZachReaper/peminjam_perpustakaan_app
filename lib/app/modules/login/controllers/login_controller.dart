@@ -11,10 +11,10 @@ import 'package:peminjam_perpustakaan_app/app/data/provider/storage_provider.dar
 import 'package:peminjam_perpustakaan_app/app/routes/app_pages.dart';
 
 class LoginController extends GetxController {
-  //TODO: Implement LoginController
-  final GlobalKey<FormState> formkey = GlobalKey<FormState>();
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  //TODO: Implement LoginController
 
   final count = 0.obs;
   @override
@@ -27,7 +27,7 @@ class LoginController extends GetxController {
     super.onReady();
     String status = StorageProvider.read(StorageKey.status);
     log("status : $status");
-    if(status == "Logged"){
+    if(status == "logged"){
       Get.offAllNamed(Routes.HOME);
     }
   }
@@ -44,24 +44,24 @@ class LoginController extends GetxController {
     loadingLogin(true);
     try{
       FocusScope.of(Get.context!).unfocus();
-      formkey.currentState?.save();
-      if (formkey.currentState!.validate()) {
+      formKey.currentState?.save();
+      if (formKey.currentState!.validate()){
         final response = await ApiProvider.instance().post(Endpoint.login,
             data: dio.FormData.fromMap(
                 {"username": usernameController.text.toString(), "password": passwordController.text.toString()}));
-        if (response.statusCode == 200) {
+        if (response.statusCode == 200){
           final ResponseLogin responseLogin =
           ResponseLogin.fromJson(response.data);
           await StorageProvider.write(StorageKey.idUser,
-          "$ResponseLogin.data?.id}");
-          await StorageProvider.write(StorageKey.status, "Logged");
+              "${responseLogin.data?.id}");
+          await StorageProvider.write(StorageKey.status, "logged");
           Get.offAllNamed(Routes.HOME);
         } else {
           Get.snackbar("Sorry", "Login Gagal", backgroundColor: Colors.orange);
         }
       }
       loadingLogin(false);
-    } on dio.DioException catch (e) {
+    } on dio.DioException catch (e){
       loadingLogin(false);
       Get.snackbar("Sorry", e.message ?? "", backgroundColor: Colors.red);
     } catch (e) {

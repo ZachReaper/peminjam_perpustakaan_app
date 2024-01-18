@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
-import 'package:peminjam_perpustakaan_app/app/routes/app_pages.dart';
 
+import '../../../routes/app_pages.dart';
 import '../controllers/login_controller.dart';
 
 class LoginView extends GetView<LoginController> {
@@ -18,7 +17,7 @@ class LoginView extends GetView<LoginController> {
       ),
       body: Center(
           child: Form(
-            key: controller.formkey,
+            key: controller.formKey,
             child: Column(
               children: [
                 TextFormField(
@@ -44,12 +43,12 @@ class LoginView extends GetView<LoginController> {
                 Obx(() =>
                 controller.loadingLogin.value?
                 CircularProgressIndicator():
-                ElevatedButton(onPressed: () {
+                ElevatedButton(onPressed: (){
                   controller.login();
                 },
                     child: Text("Login"))),
                 ElevatedButton(onPressed: ()=>Get.toNamed(Routes.REGISTER),
-                    child: Text("Register"))
+                    child: Text("Register")),
               ],
             ),
           )),
